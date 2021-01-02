@@ -25,9 +25,9 @@ class AuthenticationTest extends TestCase
             'password' => 'password',
         ];
         $this->json('POST', route('register'), $input)
-            ->assertJsonStructure(['id','name','email']);
-        $response = $this->json('POST', route('login'), $input)
-            ->assertJsonStructure(['token', 'token_type', 'expires_in']);
+            ->assertJsonStructure(['data' =>['id','name','email']]);
+        $this->json('POST', route('login'), $input)
+            ->assertJsonStructure(['data' => ['token', 'token_type', 'expires_in']]);
     }
 
     /**
@@ -42,9 +42,9 @@ class AuthenticationTest extends TestCase
             'password' => 'password',
         ];
         $this->json('POST', route('login'), $input)
-            ->assertJsonStructure(['token', 'token_type', 'expires_in']);
+            ->assertJsonStructure(['data' => ['token', 'token_type', 'expires_in']]);
         $this->json('POST', route('refresh'))
-            ->assertJsonStructure(['token', 'token_type', 'expires_in']);
+            ->assertJsonStructure(['data' => ['token', 'token_type', 'expires_in']]);
     }
 
     /**
@@ -68,7 +68,7 @@ class AuthenticationTest extends TestCase
             'password' => 'newpassword',
         ];
         $this->json('POST', route('login'), $input)
-            ->assertJsonStructure(['token', 'token_type', 'expires_in']);
+            ->assertJsonStructure(['data' => ['token', 'token_type', 'expires_in']]);
 
     }
 

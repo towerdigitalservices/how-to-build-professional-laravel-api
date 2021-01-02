@@ -6,6 +6,9 @@ use App\Http\Requests\Authentication\LoginRequest;
 use App\Http\Requests\Authentication\RegisterRequest;
 use App\Http\Requests\Authentication\UpdatePasswordRequest;
 use App\Repositories\UserRepository;
+use App\Http\Transformers\UserTransformer;
+use Illuminate\Http\Request;
+use League\Fractal\Manager;
 
 class AuthController extends Controller
 {
@@ -14,8 +17,13 @@ class AuthController extends Controller
      */
     protected $users;
 
-    public function __construct(UserRepository $users)
+    public function __construct(
+        UserTransformer $transformer,
+        UserRepository $users,
+        Request $request
+    )
     {
+        parent::__construct($transformer, $request);
         $this->users = $users;
     }
 
@@ -25,7 +33,7 @@ class AuthController extends Controller
 
         $user = $this->users->create($request->validated());
 
-        return $user;
+        return $this->respondWithItem($user);
     }
 
     public function login(LoginRequest $request)
