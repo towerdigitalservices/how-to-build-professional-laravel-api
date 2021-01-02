@@ -24,6 +24,7 @@ class AuthController extends Controller
     )
     {
         parent::__construct($transformer, $request);
+
         $this->users = $users;
     }
 
@@ -49,7 +50,7 @@ class AuthController extends Controller
     public function getAuthUser()
     {
         if ($user = auth()->user()) {
-            return $user;
+            return $this->respondWithItem($user);
         }
         return $this->respondWithError('Unauthenticated', 401);
     }

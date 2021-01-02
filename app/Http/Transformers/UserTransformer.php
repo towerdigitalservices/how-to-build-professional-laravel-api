@@ -13,7 +13,7 @@ class UserTransformer extends TransformerAbstract
     ];
 
     protected $availableIncludes = [
-        //
+        'roles',
     ];
 
     public function transform(User $user)
@@ -23,5 +23,10 @@ class UserTransformer extends TransformerAbstract
             'name' => $user->name,
             'email' => $user->email,
         ];
+    }
+
+    public function includeRoles(User $user)
+    {
+        return $this->collection($user->roles, new RoleTransformer);
     }
 }

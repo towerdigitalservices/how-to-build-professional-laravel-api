@@ -4,7 +4,7 @@ namespace App\Models;
 
 use App\Models\Traits\UsesJWT;
 use App\Models\Traits\UsesUuids;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\Traits\HasRole;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -15,6 +15,7 @@ class User extends Authenticatable implements JWTSubject
     use Notifiable,
         UsesJWT,
         UsesUuids,
+        HasRole,
         HasFactory;
 
     protected $fillable = [
@@ -27,13 +28,4 @@ class User extends Authenticatable implements JWTSubject
         'password',
     ];
 
-    public function toArray()
-    {
-        return [
-            'id' => $this->id,
-            'name' => $this->name,
-            'email' => $this->email,
-        ];
-
-    }
 }

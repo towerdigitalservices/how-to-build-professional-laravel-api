@@ -44,7 +44,7 @@ class BaseRepository
      *
      * @return Model
      */
-    public function create(Array $data): Model
+    public function create(array $data): Model
     {
         return $this->model->create($data);
     }
@@ -56,9 +56,12 @@ class BaseRepository
      *
      * @return Model
      */
-    public function update(Array $data): Model
+    public function update(string $id, array $data): Model
     {
-        return $this->model->update($data);
+        $model = $this->byId($id);
+        $model->update($data);
+        $model->refresh();
+        return $model;
     }
 
     /**

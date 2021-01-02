@@ -67,11 +67,12 @@ class Controller extends BaseController
         return response(compact('data'));
     }
 
-    protected function respondWithItem($item)
+    protected function respondWithItem($item, $status = 200)
     {
         $item = new Item($item, $this->transformer);
 
-        return $this->fractal->createData($item)->toArray();
+        $response = $this->fractal->createData($item)->toArray();
+        return response($response, $status);
     }
 
     protected function respondWithCollection($item)
