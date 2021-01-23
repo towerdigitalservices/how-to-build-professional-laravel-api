@@ -15,6 +15,6 @@ abstract class TestCase extends BaseTestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->helper = app()->make(TestHelper::class);
+        $this->helper = new TestHelper($this->app);
     }
 }

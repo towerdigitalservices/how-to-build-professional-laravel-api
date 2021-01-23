@@ -48,6 +48,22 @@ class RoleAndPermissionSeeder extends Seeder
                 'name' => 'View Users',
                 'slug' => 'view-users',
             ],
+            [
+                'name' => 'View AllPhone Numbers',
+                'slug' => 'view-all-phones'
+            ],
+            [
+                'name' => 'Provision Phone Numbers',
+                'slug' => 'provision-phones'
+            ],
+            [
+                'name' => 'Delete Phone Numbers',
+                'slug' => 'delete-phones'
+            ],
+            [
+                'name' => 'Send SMS Message',
+                'slug' => 'send-sms'
+            ],
         ];
         $permissionIds = [];
         foreach($permissions as $permission) {
@@ -67,6 +83,11 @@ class RoleAndPermissionSeeder extends Seeder
                     'modify-users',
                     'delete-users',
                     'view-users',
+                    'view-all-phones',
+                    'provision-phones',
+                    'delete-phones',
+                    'send-sms'
+
             ]
             ],
             [
@@ -77,6 +98,10 @@ class RoleAndPermissionSeeder extends Seeder
                     'modify-users',
                     'delete-users',
                     'view-users',
+                    'view-all-phones',
+                    'provision-phones',
+                    'delete-phones',
+                    'send-sms'
             ]
 
             ],
@@ -85,6 +110,7 @@ class RoleAndPermissionSeeder extends Seeder
                 'slug' => 'user',
                 'permissions' => [
                     'view-users',
+                    'send-sms'
             ]
 
             ],
