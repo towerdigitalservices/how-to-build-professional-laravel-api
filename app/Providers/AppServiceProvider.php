@@ -3,7 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use App\Services\Contracts\PhoneService;
+use App\Contracts\PhoneService;
 use App\Services\Twilio;
 
 class AppServiceProvider extends ServiceProvider
@@ -27,8 +27,8 @@ class AppServiceProvider extends ServiceProvider
                 case 'some-other-service':
                     // $provider = $app->make(SomeOtherService::class);
                     break;
-
-            }
+                }
+            return $provider;
         });
     }
 

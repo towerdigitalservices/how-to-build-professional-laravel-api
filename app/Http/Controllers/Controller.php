@@ -2,21 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
-use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controller as BaseController;
 use League\Fractal\Manager;
 use League\Fractal\TransformerAbstract as Transformer;
 use League\Fractal\Resource\Collection;
 use League\Fractal\Resource\Item;
 
-class Controller extends BaseController
+class Controller
 {
-    use AuthorizesRequests,
-        DispatchesJobs,
-        ValidatesRequests;
+    use DispatchesJobs;
 
     /**
      * @property Manager
@@ -58,10 +53,19 @@ class Controller extends BaseController
         return response(compact('data'), $status);
     }
 
-    protected function respondWithMessage($message)
+    protected function respondWithMessage(string $message)
     {
         $data = [
             'message' => $message,
+            'status' => 200
+        ];
+        return response(compact('data'));
+    }
+
+    protected function respondWithArray(array $array)
+    {
+        $data = [
+            'results' => $array,
             'status' => 200
         ];
         return response(compact('data'));

@@ -3,8 +3,10 @@
 namespace Tests;
 use App\Models\User;
 use App\Models\Role;
+// use App\Models\Phone;
 use Mockery;
-use App\Services\Contracts\PhoneService;
+use Illuminate\Support\Facades\Auth;
+use App\Contracts\PhoneService;
 
 class TestHelper
 {
@@ -14,13 +16,23 @@ class TestHelper
     }
     public function user($role = null)
     {
-        $user =  User::factory()->create();
+        $user =  User::factory()->make();
 
-        if(!empty($role)){
+        if(!empty($role)) {
             $user->assignRole($role);
-            $user->save();
         }
+        $user->save();
         return $user;
+    }
+
+    public function login(User $user)
+    {
+        Auth::login($user);
+    }
+
+    public function logout()
+    {
+        Auth::logout();
     }
 
     public function role()
@@ -28,9 +40,14 @@ class TestHelper
         return Role::factory()->create();
     }
 
-    public function phone()
+    public function userWithPhone($role = null)
     {
-        return Role::factory()->make();
+        $user = $this->user($role);
+        $user->phones()->create([
+            'twilio_phone_id' => 'abcxyz123',
+            'twilio_phone_number' => '+15555555555'
+        ]);
+        return $user;
     }
 
     public function mockPhoneService()

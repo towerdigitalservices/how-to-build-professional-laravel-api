@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Eloquent\Model;
+use TowerDigital\Tools\Repositories\BaseRepository;
 
 class UserRepository extends BaseRepository
 {
@@ -22,12 +23,11 @@ class UserRepository extends BaseRepository
         return $user;
     }
 
-    public function updatePassword(String $userId,String $password): bool
+    public function updatePassword(String $userId,String $password)
     {
         $user = $this->byId($userId);
         $user->password = Hash::make($password);
         $user->save();
-        return true;
     }
 
 }

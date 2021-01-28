@@ -2,10 +2,13 @@
 
 namespace App\Providers;
 
-use Illuminate\Auth\Events\Registered;
-use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
+use App\Events\UserSignedUp;
+use App\Events\UserLoggedIn;
+use App\Listeners\CheckForNewDevice;
+use App\Listeners\SendWelcomeEmail;
+use App\Models\User;
+use App\Observers\UserObserver;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
-use Illuminate\Support\Facades\Event;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -15,9 +18,12 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        Registered::class => [
-            SendEmailVerificationNotification::class,
+        UserSignedUp::class => [
+            SendWelcomeEmail::class,
         ],
+        UserLoggedIn::class => [
+            CheckForNewDevice::class,
+        ]
     ];
 
     /**
@@ -27,6 +33,6 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        User::observe(UserObserver::class);
     }
 }

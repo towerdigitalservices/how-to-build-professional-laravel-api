@@ -2,7 +2,7 @@
 namespace App\Repositories;
 
 use App\Models\Permission;
-use Illuminate\Database\Eloquent\Model;
+use TowerDigital\Tools\Repositories\BaseRepository;
 
 class PermissionRepository extends BaseRepository
 {

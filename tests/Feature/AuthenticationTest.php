@@ -56,11 +56,11 @@ class AuthenticationTest extends TestCase
             'user_id' => $user->id,
             'password' => 'newpassword'
         ];
-        auth()->login($user);
+        $this->helper->login($user);
         $this->actingAs($user)
             ->json('POST', route('update-password'), $input)
             ->assertStatus(200);
-        auth()->logout();
+        $this->helper->logout();
         $input = [
             'email' => $user->email,
             'password' => 'newpassword',
@@ -77,7 +77,7 @@ class AuthenticationTest extends TestCase
     public function users_can_logout()
     {
         $user = $this->helper->user();
-        auth()->login($user);
+        $this->helper->login($user);
         $this->actingAs($user)
             ->json('POST', route('logout'))
             ->assertStatus(200);

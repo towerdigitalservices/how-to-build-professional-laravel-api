@@ -13,7 +13,7 @@ class PhoneTransformer extends TransformerAbstract
     ];
 
     protected $availableIncludes = [
-        //
+        'user'
     ];
 
     public function transform(Phone $phone)
@@ -23,5 +23,10 @@ class PhoneTransformer extends TransformerAbstract
             'twilio_phone_id' => $phone->twilio_phone_id,
             'twilio_phone_number' => $phone->twilio_phone_number,
         ];
+    }
+
+    public function includeUser(Phone $phone)
+    {
+        return $this->collection($phone->user, new UserTransformer);
     }
 }

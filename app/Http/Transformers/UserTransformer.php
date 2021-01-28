@@ -13,7 +13,7 @@ class UserTransformer extends TransformerAbstract
     ];
 
     protected $availableIncludes = [
-        'roles',
+        'role',
         'phones'
     ];
 
@@ -26,11 +26,12 @@ class UserTransformer extends TransformerAbstract
         ];
     }
 
-    public function includeRoles(User $user)
+    public function includeRole(User $user)
     {
         return $this->collection($user->roles, new RoleTransformer);
     }
-    public function includePhones(Phone $phone)
+
+    public function includePhones(User $user)
     {
         return $this->collection($user->phones, new PhoneTransformer);
     }

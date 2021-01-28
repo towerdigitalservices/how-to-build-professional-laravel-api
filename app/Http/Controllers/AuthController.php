@@ -8,7 +8,7 @@ use App\Http\Requests\Authentication\UpdatePasswordRequest;
 use App\Repositories\UserRepository;
 use App\Http\Transformers\UserTransformer;
 use Illuminate\Http\Request;
-use League\Fractal\Manager;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
@@ -41,7 +41,7 @@ class AuthController extends Controller
     {
         $credentials = $request->validated();
 
-        if (!$token = auth()->attempt($credentials)) {
+        if (!$token = Auth::attempt($credentials)) {
             return $this->respondWithError('Invalid Credentials provided', 401);
         }
         return $this->respondWithToken($token);
@@ -49,7 +49,7 @@ class AuthController extends Controller
 
     public function getAuthUser()
     {
-        if ($user = auth()->user()) {
+        if ($user = Auth::user()) {
             return $this->respondWithItem($user);
         }
         return $this->respondWithError('Unauthenticated', 401);
@@ -57,27 +57,24 @@ class AuthController extends Controller
 
     public function refresh()
     {
-        if (!auth()->user()) {
+        if (!Auth::user()) {
             return $this->respondWithError('Unauthenticated', 401);
         }
 
-        $token = auth()->refresh();
+        $token = Auth::refresh();
 
         return $this->respondWithToken($token);
     }
 
     public function updatePassword(UpdatePasswordRequest $request)
     {
-        if($this->users->updatePassword($request->user_id, $request->password)) {
-            return $this->respondWithMessage('Your password was successfully updated.');
-        }
-        return $this->respondWithError('Unable to update your password', 422);
+        $this->users->updatePassword($request->user_id, $request->password);
+        return $this->respondWithMessage('Your password was successfully updated.');
     }
 
     public function logout()
     {
-        auth()->logout();
-
+        Auth::logout();
         return $this->respondWithMessage('You were successfully logged out.');
     }
 }

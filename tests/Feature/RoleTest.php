@@ -40,17 +40,17 @@ class RoleTest extends TestCase
      * @test
      * @group roles
      */
-    public function admins_can_create_and_view_roles()
+    public function managers_can_create_and_view_roles()
     {
-        $admin = $this->helper->user('admin');
+        $manager = $this->helper->user('manager');
         $input = [
             'name' => 'Test Role',
             'slug' => 'test-role',
         ];
-        $response = $this->actingAs($admin)
+        $response = $this->actingAs($manager)
             ->json('POST', route('create-role'), $input);
         $decoded = $response->decodeResponseJson();
-        $this->actingAs($admin)
+        $this->actingAs($manager)
             ->json('GET', route('view-role',$decoded['data']['id']))
             ->assertJsonStructure(['data' => ['id','name','slug']]);
     }
@@ -59,15 +59,15 @@ class RoleTest extends TestCase
      * @test
      * @group roles
      */
-    public function admins_can_update_roles()
+    public function managers_can_update_roles()
     {
-        $admin = $this->helper->user('admin');
+        $manager = $this->helper->user('manager');
         $role = $this->helper->role();
         $input = [
             'name' => 'Test Role Updated',
             'slug' => 'test-role',
         ];
-        $response = $this->actingAs($admin)
+        $response = $this->actingAs($manager)
             ->json('PUT', route('update-role',$role->id), $input);
         $decoded = $response->decodeResponseJson();
         $this->assertEquals($decoded['data']['name'], $input['name']);
@@ -77,11 +77,11 @@ class RoleTest extends TestCase
      * @test
      * @group roles
      */
-    public function admins_can_delete_roles()
+    public function managers_can_delete_roles()
     {
-        $admin = $this->helper->user('admin');
+        $manager = $this->helper->user('manager');
         $role = $this->helper->role();
-        $response = $this->actingAs($admin)
+        $response = $this->actingAs($manager)
             ->json('DELETE', route('delete-role',$role->id))
             ->assertStatus(200);
     }

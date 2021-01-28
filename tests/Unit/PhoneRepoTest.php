@@ -19,7 +19,7 @@ class PhoneRepoTest extends TestCase
         $user = $this->helper->user('user');
         $this->helper->mockPhoneService();
         $repo = app()->make(PhoneRepository::class);
-        $repo->provisionPhone('+15555555555', $user);
+        $repo->provisionPhone('+15555555555', $user->id);
         $this->assertDatabaseCount('phones', 1);
     }
     /**

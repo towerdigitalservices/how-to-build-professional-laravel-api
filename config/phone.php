@@ -7,6 +7,6 @@ return [
         'token' => env('TWILIO_AUTH_TOKEN', ''),
     ],
     'some-other-service' => [
-        // Some Other Service Credetials
+        // Some Other Service Credentials
     ]
 ];

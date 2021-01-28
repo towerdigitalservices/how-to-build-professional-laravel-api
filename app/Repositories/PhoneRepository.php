@@ -3,8 +3,8 @@ namespace App\Repositories;
 
 use App\Models\Phone;
 use App\Models\User;
-use Illuminate\Database\Eloquent\Model;
-use App\Services\Contracts\PhoneService;
+use App\Contracts\PhoneService;
+use TowerDigital\Tools\Repositories\BaseRepository;
 
 class PhoneRepository extends BaseRepository
 {
@@ -20,8 +20,9 @@ class PhoneRepository extends BaseRepository
         return $this->service->searchAvailableNumbers($areaCode, $count);
     }
 
-    public function provisionPhone(string $phoneNumber, User $user)
+    public function provisionPhone(string $phoneNumber, string $userId)
     {
+        $user = User::find($userId);
         $number = $this->service->provisionNumber($phoneNumber);
         return $user->phones()->create($number);
     }
